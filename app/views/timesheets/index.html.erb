@@ -1,0 +1,23 @@
+<h1>Timesheet entries</h1>
+<table class="table table-bordered table-hover text-center">
+    <thead>
+        <tr>
+            <th scope="col">User Name</th>
+            <th scope="col">Clock in time</th>
+            <th scope="col">Clock out time</th>
+            <th scope="col">Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @timesheets.each do |timesheet| %>      
+            <tr>
+                <td><%= timesheet.user_id %></td>
+                <td><%= timesheet.clock_in %></td>
+                <td><%= timesheet.clock_out %></td>
+                <td><%= timesheet.date %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+
+<%= link_to "Profile page", user_path(current_user) %>
