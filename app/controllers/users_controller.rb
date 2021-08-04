@@ -1,10 +1,11 @@
 class UsersController < ApplicationController
   def index
-    # byebug
     @users = User.all
   end
 
   def show
+    @all_timesheets = Timesheet.select(:user_id).distinct
+    @current_user_timesheets = Timesheet.where(user_id: current_user.id)
   end
 
   def edit

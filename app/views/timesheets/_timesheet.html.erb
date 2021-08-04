@@ -1,18 +1,18 @@
-<h1>Timesheet entries</h1>
+<h2>Timesheet entries</h2>
 <table class="table table-bordered table-hover text-center">
     <thead>
         <tr>
+            <th scope="col">Date</th>
             <th scope="col">Clock in time</th>
             <th scope="col">Clock out time</th>
-            <th scope="col">Date</th>
         </tr>
     </thead>
     <tbody>
-        <% @timesheet.each do |timesheet| %>      
+        <% timesheets.each do |timesheet| %>      
             <tr>
+                <td><%= timesheet.date.to_date %></td>
                 <td><%= timesheet.clock_in %></td>
                 <td><%= timesheet.clock_out %></td>
-                <td><%= timesheet.date.to_date %></td>
             </tr>
         <% end %>
     </tbody>

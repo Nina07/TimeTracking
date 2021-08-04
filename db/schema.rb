@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_03_213934) do
+ActiveRecord::Schema.define(version: 2021_08_04_122921) do
+
+  create_table "roles", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "timesheets", charset: "utf8mb4", force: :cascade do |t|
     t.datetime "clock_in"
@@ -30,11 +36,12 @@ ActiveRecord::Schema.define(version: 2021_08_03_213934) do
     t.datetime "remember_created_at"
     t.string "first_name"
     t.string "last_name"
-    t.string "email_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "role_id", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["role_id"], name: "index_users_on_role_id"
   end
 
   add_foreign_key "timesheets", "users"

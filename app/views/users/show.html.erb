@@ -1,4 +1,16 @@
 <h2><%= "Welcome #{current_user.first_name}"%></h2>
-<%= button_to "Clock in", create_clock_in_entry_path, class: "btn btn-outline-primary" %>
-<%= button_to "Clock out", create_clock_out_entry_path, class: "btn btn-outline-danger" %>
-<%= link_to "View timesheet", timesheet_path(current_user), class: "btn btn-outline-info"%>
+<div class="row">
+    <div class="btn-group">
+        <div class="col-md-6 clock-action"><%= button_to "Clock in", create_clock_in_entry_path, class: "btn btn-outline-primary btn-lg" %></div>
+        <div class="col-md-6 clock-action"><%= button_to "Clock out", create_clock_out_entry_path, class: "btn btn-outline-danger btn-lg" %></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="container-fluid">
+    <% if current_user.role_id != 1 %>
+        <%= render partial: 'timesheets/timesheet', locals: {timesheets: @current_user_timesheets} %>
+    <% else %>
+        <%= render partial: 'teachers' %>
+    <% end %></div>
+</div>

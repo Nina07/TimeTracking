@@ -1,18 +1,25 @@
-<h1>Timesheet entries</h1>
+<h2>Timesheet entries for <%= user_name(@teacher)%> </h2>
 <table class="table table-bordered table-hover text-center">
     <thead>
         <tr>
+            <th scope="col">Date</th>
             <th scope="col">Clock in time</th>
             <th scope="col">Clock out time</th>
-            <th scope="col">Date</th>
+            <% if current_user.role_id == 1 %>
+                <th colspan=2 scope="col">Actions</th>
+            <% end %>
         </tr>
     </thead>
     <tbody>
-        <% @timesheet.each do |timesheet| %>
+        <% @teacher.timesheets.each do |timesheet| %>
             <tr>
+                <td><%= timesheet.date.to_date %></td>
                 <td><%= timesheet.clock_in %></td>
                 <td><%= timesheet.clock_out %></td>
-                <td><%= timesheet.date.to_date %></td>
+                <% if current_user.role_id == 1 %>
+                    <td><%= link_to "Edit", edit_timesheet_path(@teacher) %></td>
+                    <td><%= link_to "Destroy", timesheet_path(timesheet.id, user_id: timesheet.user.id), method: :delete, data: { confirm: 'Are you sure?'}  %></td>
+                <% end %>
             </tr>
         <% end %>
     </tbody>

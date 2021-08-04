@@ -1,0 +1,23 @@
+<h3>List of Teachers</h3>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover text-center">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Last clock in time</th>
+                <th scope="col">Last clock out time</th>
+                <th colspan=3 scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @all_timesheets.each do |teacher| %>      
+                <tr>
+                    <td><%= user_name(teacher.user) %></td>
+                    <td><%= teacher.user.timesheets.last.clock_in %></td>
+                    <td><%= teacher.user.timesheets.last.clock_in %></td>
+                    <td><%= link_to "View timesheet", timesheet_path(id: teacher.user_id) %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
