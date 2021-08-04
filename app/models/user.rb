@@ -7,6 +7,6 @@ class User < ApplicationRecord
   has_many :timesheets
   belongs_to :role
 
-  validates :first_name, :last_name, :email, presence: true
+  validates_presence_of :first_name, :last_name, :email
   validates :email, presence: true, format: Devise.email_regexp
 end
