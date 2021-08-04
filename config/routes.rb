@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   resources :users
 
-  resources :timesheets, only: [:index, :show, :edit, :destroy]
+  resources :timesheets
 
   # get 'timesheets', to: "timesheets#index"
   post 'create_clock_in_entry', to: "timesheets#create_clock_in_entry"
