@@ -1,7 +1,8 @@
 require "test_helper"
 
 class RoleTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "save a new role" do
+    role = Role.new
+    assert role.save
+  end
 end
