@@ -5,4 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :timesheets
+
+  validates :first_name, :last_name, :email, presence: true
+  validates :email, presence: true, format: Devise.email_regexp
 end

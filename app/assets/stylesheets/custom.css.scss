@@ -1,9 +1,21 @@
 @import 'bootstrap/dist/css/bootstrap';
 
-.jumbotron {
+#jumbotron_index {
     background-image: asset-url('daycare');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
     height: 550px;
+}
+
+#jumbotron_auth_page{
+    background-image: asset-url('child11');
+    background-position: right top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 800px;
+}
+
+#div2 {
+    margin-top: 20px;
 }
