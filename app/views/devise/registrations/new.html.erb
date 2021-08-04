@@ -9,13 +9,21 @@
 
       <div class="field mb-3">
         <%= f.label :first_name %><br />
-        <%= f.email_field :first_name, autofocus: true, autocomplete: "email" %>
+        <%= f.text_field :first_name, autofocus: true %>
       </div>
 
       <div class="field mb-3">
         <%= f.label :last_name %><br />
-        <%= f.email_field :last_name, autofocus: true, autocomplete: "email" %>
-      </div><h2>Sign up</h2>
+        <%= f.text_field :last_name, autofocus: true %>
+      </div>
+     
+      <div class="form-check form-check-inline mb-3">
+        <%= f.radio_button :role_id, "2", :id=>"first", :checked => true %>
+        <label for="first" class="form-check-label">Teacher</label>
+      
+        <%= f.radio_button :role_id, "1", :id=>"second" %>
+        <label for="second" class="form-check-label">Admin</label>
+      </div>
 
       <div class="field mb-3">
         <%= f.label :email %><br />

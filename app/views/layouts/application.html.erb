@@ -13,6 +13,9 @@
   <body>
     <%= render 'layouts/navigation' %>
     <div class="container-fluid" id="home-container">
+      <% flash.each do |name, msg| %>
+        <%= content_tag :div, msg, class: "alert alert-info" %>
+      <% end %>
       <%= yield %>
     </div>
   </body>

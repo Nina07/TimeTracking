@@ -1,0 +1,15 @@
+<%= form_with(model: @teacher, local: true) do |f| %>
+    <p>
+        <%= f.label :clock_in %></br>
+        <%= f.datetime_select(:clock_in) %>
+    </p>
+
+    <p>
+        <%=  f.label :clock_out %></br>
+        <%= f.datetime_select(:clock_out) %>
+    </p>
+
+    <p>
+        <%= f.submit %>
+    </p>
+<% end %>
