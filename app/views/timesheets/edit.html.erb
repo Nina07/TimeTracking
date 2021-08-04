@@ -1,15 +1,20 @@
-<%= form_with(model: @teacher, local: true) do |f| %>
-    <p>
+<ul class="list-group list-group-horizontal">
+  <li class="list-group-item">Clock in: <%= @timesheet.clock_in%></li>
+  <li class="list-group-item">Clock out: <%= @timesheet.clock_out%></li>
+</ul>
+
+<%= form_with(model: @timesheet, local: true) do |f| %>
+    <div class="field mb-3">
         <%= f.label :clock_in %></br>
-        <%= f.datetime_select(:clock_in) %>
-    </p>
+        <%= f.datetime_field :clock_in, as: :datetime, value: f.object.clock_in.try(:strftime,"%m/%d/%Y") %>
+    </div>
 
-    <p>
+    <div class="field mb-3">
         <%=  f.label :clock_out %></br>
-        <%= f.datetime_select(:clock_out) %>
-    </p>
+        <%= f.datetime_field :clock_out, as: :datetime, value: f.object.clock_in.try(:strftime,"%m/%d/%Y") %>
+    </div>
 
-    <p>
+    <div class="actions mb-3">
         <%= f.submit %>
-    </p>
+    </div>
 <% end %>

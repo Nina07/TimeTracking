@@ -1,4 +1,6 @@
 class TimesheetsController < ApplicationController
+  before_action :set_timesheet, only: [:edit, :update, :destroy]
+
   def index
     @timesheets = current_user.timesheets.order(clock_in: :desc)
   end
@@ -9,7 +11,19 @@ class TimesheetsController < ApplicationController
   end
 
   def edit
-    @teacher = User.find(params[:id])
+  end
+
+  def update
+    byebug
+    timesheet_params[:clock_in].blank? ? timesheet_params[:clock_in] = @timesheet.clock_in : timesheet_params[:clock_in].to_datetime
+    timesheet_params[:clock_out].blank? ? timesheet_params[:clock_out] = @timesheet.clock_out : timesheet_params[:clock_out].to_datetime
+
+    if @timesheet.update(timesheet_params)
+      flash[:notice] = "Timesheet detail updated successfully!"
+      redirect_to user_path(current_user)
+    else
+      render 'edit'
+    end
   end
 
   def create_clock_in_entry
@@ -21,6 +35,7 @@ class TimesheetsController < ApplicationController
       end
     else
       flash[:notice] = "You have not clocked out from last time yet. Clock out first to create a new entry."
+      redirect_to user_path(current_user)
     end
   end
 
@@ -34,7 +49,18 @@ class TimesheetsController < ApplicationController
 
   def destroy
     @timesheet = Timesheet.find(params[:id])
-    @timesheet.destroy
-    # redirect_to timesheet_path()
+    if @timesheet.destroy
+      flash[:notice] = "Deleted successfully"
+      redirect_to user_path(current_user)
+    end
+  end
+
+  private
+  def timesheet_params
+    params.require(:timesheet).permit(:clock_in, :clock_out)
+  end
+
+  def set_timesheet
+    @timesheet = Timesheet.find(params[:id])
   end
 end
