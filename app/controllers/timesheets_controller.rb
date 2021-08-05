@@ -26,17 +26,13 @@ class TimesheetsController < ApplicationController
   end
 
   def create_clock_in_entry
-    if !timesheet_present? #New user
-      @timesheet = current_user.timesheets.create(clock_in: Time.now, clock_out: nil, date: Date.today)
-      flash[:notice] = "Time sheet successfully updated!"
-    elsif timesheet_present? && !last_clock_out #existing user, empty clock out
+    if !timesheet_present? || timesheet_present? && !last_timesheet_entry
       @timesheet = current_user.timesheets.create(clock_in: Time.now, clock_out: nil, date: Date.today)
       flash[:notice] = "Time sheet successfully updated!"
     else
       flash[:notice] = "You have not clocked out from last time yet. Clock out first to create a new entry."
-      redirect_to user_path(current_user)
     end
-
+    redirect_to user_path(current_user)
   end
 
   def create_clock_out_entry
