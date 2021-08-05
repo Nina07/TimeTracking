@@ -5,7 +5,7 @@
             <th scope="col">Date</th>
             <th scope="col">Clock in time</th>
             <th scope="col">Clock out time</th>
-            <% if current_user.role_id == 1 %>
+            <% if current_user.role.name == "Admin" %>
                 <th colspan=2 scope="col">Actions</th>
             <% end %>
         </tr>

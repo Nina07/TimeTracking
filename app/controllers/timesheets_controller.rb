@@ -14,7 +14,6 @@ class TimesheetsController < ApplicationController
   end
 
   def update
-    byebug
     timesheet_params[:clock_in].blank? ? timesheet_params[:clock_in] = @timesheet.clock_in : timesheet_params[:clock_in].to_datetime
     timesheet_params[:clock_out].blank? ? timesheet_params[:clock_out] = @timesheet.clock_out : timesheet_params[:clock_out].to_datetime
 
@@ -27,23 +26,26 @@ class TimesheetsController < ApplicationController
   end
 
   def create_clock_in_entry
-    if current_user.timesheets.last.clock_out != nil
-      @timesheet = current_user.timesheets.create(clock_in: Time.now, clock_out: nil,date: Date.today)
-      if @timesheet.save
-        flash[:notice] = "Time sheet successfully updated!"
-        redirect_to user_path(current_user)
-      end
+    if !timesheet_present? #New user
+      @timesheet = current_user.timesheets.create(clock_in: Time.now, clock_out: nil, date: Date.today)
+      flash[:notice] = "Time sheet successfully updated!"
+    elsif timesheet_present? && !last_clock_out #existing user, empty clock out
+      @timesheet = current_user.timesheets.create(clock_in: Time.now, clock_out: nil, date: Date.today)
+      flash[:notice] = "Time sheet successfully updated!"
     else
       flash[:notice] = "You have not clocked out from last time yet. Clock out first to create a new entry."
       redirect_to user_path(current_user)
     end
+
   end
 
   def create_clock_out_entry
-    @last_clock_in = current_user.timesheets.last
-    if @last_clock_in.update(clock_out: Time.now)
+    if last_timesheet_entry.clock_out.nil?
+      last_timesheet_entry.update(clock_out: Time.now)
       flash[:notice] = "Time sheet successfully updated!"
       redirect_to user_path(current_user)
+    else
+      flash[:notice] = "Your last clock out is already uo to date!"
     end
   end
 
@@ -62,5 +64,13 @@ class TimesheetsController < ApplicationController
 
   def set_timesheet
     @timesheet = Timesheet.find(params[:id])
+  end
+
+  def timesheet_present?
+    current_user.timesheets.present?
+  end
+
+  def last_timesheet_entry
+    current_user.timesheets.last
   end
 end

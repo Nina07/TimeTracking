@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @all_timesheets = Timesheet.select(:user_id).distinct
+    @last_timesheet = User.all.map {|user| user.timesheets.last}
     @current_user_timesheets = Timesheet.where(user_id: current_user.id)
   end
 
