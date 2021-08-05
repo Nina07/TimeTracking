@@ -26,8 +26,15 @@ class TimesheetsController < ApplicationController
   end
 
   def create_clock_in_entry
-    if !timesheet_present? || timesheet_present? && !last_timesheet_entry
+    # byebug
+    if !timesheet_present?
       @timesheet = current_user.timesheets.create(clock_in: Time.now, clock_out: nil, date: Date.today)
+      flash[:notice] = "Time sheet successfully updated!"
+    elsif timesheet_present? && !last_timesheet_entry.clock_out.nil?
+      @timesheet = current_user.timesheets.create(clock_in: Time.now, clock_out: nil, date: Date.today)
+      flash[:notice] = "Time sheet successfully updated!"
+    elsif timesheet_present? && last_timesheet_entry.clock_out.nil?
+      @timesheet = last_timesheet_entry.update(clock_out: Time.now)
       flash[:notice] = "Time sheet successfully updated!"
     else
       flash[:notice] = "You have not clocked out from last time yet. Clock out first to create a new entry."
